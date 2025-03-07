@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Your-Font-Name&display=swap');
+.navbar-brand {
+    font-family: 'Your Font Name', sans-serif;
+    color: #desiredColor;
+    text-shadow: 1px 1px 3px #shadowColor;
+}
+
+.bg-light {
+    background: linear-gradient(to right, #startColor, #endColor);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.nav-link {
+    font-family: 'Your Font Name', sans-serif;
+    color: #normalColor;
+    transition: color 0.3s ease;
+}
+.nav-link:hover {
+    color: #hoverColor;
+}
+body, html {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(to bottom, red, blue);
+    overflow: auto;
+    background-size: cover;
+}
+.btn-primary {
+    background: linear-gradient(to right, #startColor, #endColor);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+    color: #white;
+}
+.btn-primary:hover {
+    background: #hoverBackgroundColor;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}

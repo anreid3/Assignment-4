@@ -20,6 +20,8 @@ var path = require("path");
 // setup a 'route' to listen on the default url path
 var collegeData = require('./modules/collegeData');
 
+app.use(express.static('public'));
+
 
 //app.get("/", (req, res) => {
 //    res.send("Hello World!");
