@@ -1,36 +1,60 @@
-@import url('https://fonts.googleapis.com/css2?family=Your-Font-Name&display=swap');
-.navbar-brand {
-    font-family: 'Your Font Name', sans-serif;
-    color: #desiredColor;
-    text-shadow: 1px 1px 3px #shadowColor;
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* General styling */
+body, html {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom right, red, blue);
+  overflow: auto;
+  font-family: 'Poppins', sans-serif;
 }
 
+/* Navigation Bar */
 .bg-light {
-    background: linear-gradient(to right, #startColor, #endColor);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, #ff7eb3, #ff758c);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.navbar-brand {
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 24px;
+}
+
 .nav-link {
-    font-family: 'Your Font Name', sans-serif;
-    color: #normalColor;
-    transition: color 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
 }
+
 .nav-link:hover {
-    color: #hoverColor;
+  color: #ffcccb;
+  text-decoration: underline;
 }
-body, html {
-    height: 100%;
-    margin: 0;
-    background: linear-gradient(to bottom, red, blue);
-    overflow: auto;
-    background-size: cover;
-}
+
+/* Primary Button */
 .btn-primary {
-    background: linear-gradient(to right, #startColor, #endColor);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    border: none;
-    color: #white;
+  background: #ff758c;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
+
 .btn-primary:hover {
-    background: #hoverBackgroundColor;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  background: #ff7eb3;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Table styling (if applicable) */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
 }
