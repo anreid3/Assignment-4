@@ -12,49 +12,73 @@ body, html {
 
 /* Navigation Bar */
 .bg-light {
-  background: linear-gradient(to right, #ff7eb3, #ff758c);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
 }
 
+/* Navigation Brand */
 .navbar-brand {
-  color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  font-size: 24px;
+  font-family: 'Roboto', sans-serif; /* Cool font from Google Fonts */
+  color: #ffffff; /* New Text Colour */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Text shadow */
 }
 
+/* Navigation Link */
 .nav-link {
-  color: #ffffff;
-  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  color: #ffffff; /* Normal link colour */
+  transition: color 0.3s ease;
+}
+.nav-link:hover {
+  color: #ff7e5f; /* Hover colour */
 }
 
-.nav-link:hover {
-  color: #ffcccb;
-  text-decoration: underline;
+/* App Background */
+body, html {
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(to bottom, red, blue); /* Full page gradient */
+  overflow: auto; /* Ensures gradient adapts for scrolling */
+  background-size: cover;
 }
 
 /* Primary Button */
 .btn-primary {
-  background: #ff758c;
-  color: #ffffff;
+  background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Box shadow */
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  color: white;
 }
-
 .btn-primary:hover {
-  background: #ff7eb3;
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+  background: #1a73e8; /* Hover background colour */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Hover shadow */
 }
 
-/* Table styling (if applicable) */
-.table {
-  width: 100%;
-  border-collapse: collapse;
+/* Odd Table Rows */
+table tr:nth-child(odd) td {
+  background: #f2f2f2; /* Solid background colour for odd rows */
 }
 
-.table th, .table td {
-  padding: 10px;
-  border: 1px solid #ccc;
-  text-align: left;
+/* Headings (h1-h6) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+  color: #333333; /* New text colour */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Text shadow */
+}
+
+/* Anchor Links */
+a {
+  color: #2575fc; /* Link colour */
+  text-decoration: none;
+}
+a:hover {
+  color: #6a11cb; /* Hover link colour */
+}
+
+/* Fieldset Legends */
+legend {
+  font-family: 'Roboto', sans-serif;
+  color: #444444; /* Text colour */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Text shadow */
+  padding: 10px 0; /* Padding top/bottom */
 }
