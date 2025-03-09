@@ -10,17 +10,17 @@ class Data{
 
 let dataCollection = null;
 
-const coursesPath = path.join(__dirname, "/data/courses.json");
-const studentsPath = path.join(__dirname, "/data/students.json");
+//const coursesPath = path.join(__dirname, "/data/courses.json");
+//const studentsPath = path.join(__dirname, "/data/students.json");
 
 module.exports.initialize = function () {
     return new Promise( (resolve, reject) => {
-        fs.readFile(coursesPath,'utf8', (err, courseData) => {
+        fs.readFile('./data/courses.json','utf8', (err, courseData) => {
             if (err) {
                 reject("unable to load courses"); return;
             }
 
-            fs.readFile(studentsPath,'utf8', (err, studentData) => {
+            fs.readFile('./data/students.json','utf8', (err, studentData) => {
                 if (err) {
                     reject("unable to load students"); return;
                 }
