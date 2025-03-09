@@ -84,6 +84,21 @@ app.get("/htmlDemo", (req, res) => {
     res.sendFile(path.join(__dirname, "/views/htmlDemo.html"));
 });
 
+app.get("/students/add", (req, res) => {
+    res.sendFile(path.join(__dirname, "/views/addStudent.html"));
+});
+
+app.post("/students/add", (req, res) => {
+    collegeData.addStudent(req.body)
+        .then(() => {
+            res.redirect("/students");
+        })
+        .catch((err) => {
+            console.error("Error adding student:", err);
+            res.status(500).send("Unable to add student");
+        });
+});
+
 app.use((req, res) => {
     res.status(404).json({ message: "Page Not Found" });
 });
