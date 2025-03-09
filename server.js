@@ -20,7 +20,7 @@ var path = require("path");
 // setup a 'route' to listen on the default url path
 var collegeData = require('./modules/collegeData');
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 app.use(express.urlencoded({ extended: true }));
 
