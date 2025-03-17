@@ -10,8 +10,9 @@ class Data{
 
 let dataCollection = null;
 
-const coursesPath = path.join(__dirname, "/data/courses.json");
-const studentsPath = path.join(__dirname, "/data/students.json");
+const coursesPath = path.join(__dirname, "/../data/courses.json");
+const studentsPath = path.join(__dirname, "../data/students.json");
+console.log(__dirname)
 
 module.exports.initialize = function () {
     return new Promise( (resolve, reject) => {
