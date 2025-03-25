@@ -1,12 +1,12 @@
 /*********************************************************************************
-*  WEB700 – Assignment 04
+*  WEB700 – Assignment 05
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Andrienne Reid     Student ID: 164798233    Date: March 8,2025
+*  Name: Andrienne Reid     Student ID: 164798233    Date: March 26,2025
 *
-*  Online (Vercel) Link:https://vercel.com/andrienne-reids-projects/assignment-4
+*  Online (Vercel) Link:https://vercel.com/andrienne-reids-projects/assignment-5
 *
 ********************************************************************************/ 
 
@@ -28,6 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 //app.get("/", (req, res) => {
 //    res.send("Hello World!");
 //});
+app.set('view engine', 'ejs'); // Specifies EJS as the view engine
+app.set('views', path.join(__dirname, 'views')); // Points to the "views" directory
 
 app.get("/students", (req, res) => {
     collegeData.getAllStudents()
@@ -72,20 +74,20 @@ app.get("/student/:num", (req, res) => {
 });
 
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "/views/home.html"));
+app.get('/', (req, res) => {
+    res.render('home');
 });
 
 app.get("/about", (req, res) => {
-    res.sendFile(path.join(__dirname, "/views/about.html"));
+    res.render('about');
 });
 
 app.get("/htmlDemo", (req, res) => {
-    res.sendFile(path.join(__dirname, "/views/htmlDemo.html"));
+    res.render('htmlDemo');
 });
 
 app.get("/students/add", (req, res) => {
-    res.sendFile(path.join(__dirname, "/views/addStudent.html"));
+    res.render('addStudent');
 });
 
 app.post("/students/add", (req, res) => {
