@@ -73,6 +73,18 @@ app.get("/student/:num", (req, res) => {
         });
 });
 
+app.use(function(req,res,next){
+    let route = req.path.substring(1);
+    app.locals.activeRoute = "/" + (isNaN(route.split('/')[1]) ? route.replace(/\/(?!.*)/, "") : route.replace(/\/(.*)/, ""));    
+    next();
+});
+
+navLink: function(url, options){
+    return '<li' + 
+        ((url == app.locals.activeRoute) ? ' class="nav-item active" ' : ' class="nav-item" ') + 
+        '><a class="nav-link" href="' + url + '">' + options.fn(this) + '</a></li>';
+}
+
 
 app.get('/', (req, res) => {
     res.render('home');
