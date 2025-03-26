@@ -53,7 +53,7 @@ app.locals.equal = function (lvalue, rvalue, options) {
     }
 };
 
-app.get("/students", (req, res) => {
+app.get("/student", (req, res) => {
     collegeData.getAllStudents()
         .then((students) => {
             res.render("students", { students: students }); 
