@@ -41,16 +41,6 @@ app.get("/students", (req, res) => {
         });
 });
 
-app.get("/tas", (req, res) => {
-    collegeData.getTAs()
-        .then((tas) => {
-            res.json(tas);
-        })
-        .catch(() => {
-            res.json({ message: "no results" });
-        });
-});
-
 app.get("/courses", (req, res) => {
     collegeData.getCourses()
         .then((courses) => {
@@ -83,6 +73,16 @@ navLink: function(url, options){
     return '<li' + 
         ((url == app.locals.activeRoute) ? ' class="nav-item active" ' : ' class="nav-item" ') + 
         '><a class="nav-link" href="' + url + '">' + options.fn(this) + '</a></li>';
+}
+
+equal: function (lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Ejs Helper equal needs 2 parameters");
+    if (lvalue != rvalue) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
 }
 
 

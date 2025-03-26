@@ -43,24 +43,6 @@ module.exports.getAllStudents = function(){
     })
 }
 
-module.exports.getTAs = function () {
-    return new Promise(function (resolve, reject) {
-        var filteredStudents = [];
-
-        for (let i = 0; i < dataCollection.students.length; i++) {
-            if (dataCollection.students[i].TA == true) {
-                filteredStudents.push(dataCollection.students[i]);
-            }
-        }
-
-        if (filteredStudents.length == 0) {
-            reject("query returned 0 results"); return;
-        }
-
-        resolve(filteredStudents);
-    });
-};
-
 module.exports.getCourses = function(){
    return new Promise((resolve,reject)=>{
     if (dataCollection.courses.length == 0) {
