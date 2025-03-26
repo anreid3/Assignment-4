@@ -66,11 +66,10 @@ app.get("/students", (req, res) => {
 app.get("/courses", (req, res) => {
     collegeData.getCourses()
         .then((courses) => {
-            res.json(courses);
+            res.render("course", { courses: courses }); // Pass the courses array to the view
         })
-        .catch((err) => {
-            console.error("Error retrieving courses:", err);
-            res.json({ message: "no results" });
+        .catch(() => {
+            res.render("course", { message: "no results" }); // Pass a fallback message
         });
 });
 

@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-12">
+        <br>
+        <h2>Courses</h2>
+        <hr />
+
+        <% if (courses && courses.length > 0) { %>
+            <% courses.forEach(course => { %>
+                <p>
+                    <strong>Course ID:</strong> <%= course.courseId %><br>
+                    <strong>Course Code:</strong> <%= course.courseCode %><br>
+                    <strong>Course Description:</strong> <%= course.courseDescription %><br>
+                    <hr />
+                </p>
+            <% }); %>
+        <% } else { %>
+            <p>No courses available.</p>
+        <% } %>
+    </div>
+</div>
