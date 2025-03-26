@@ -53,13 +53,13 @@ app.locals.equal = function (lvalue, rvalue, options) {
     }
 };
 
-app.get("/student", (req, res) => {
+app.get("/students", (req, res) => {
     collegeData.getAllStudents()
         .then((students) => {
-            res.render("students", { students: students }); 
+            res.render("student", { students: students }); 
         })
         .catch(() => {
-            res.render("students", { message: "no results" }); 
+            res.render("student", { message: "no results" }); 
         });
 });
 
