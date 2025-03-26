@@ -56,10 +56,10 @@ app.locals.equal = function (lvalue, rvalue, options) {
 app.get("/students", (req, res) => {
     collegeData.getAllStudents()
         .then((students) => {
-            res.json(students);
+            res.render("students", { students: students }); 
         })
         .catch(() => {
-            res.json({ message: "no results" });
+            res.render("students", { message: "no results" }); 
         });
 });
 
