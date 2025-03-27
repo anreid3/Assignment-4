@@ -100,4 +100,22 @@ module.exports.addStudent = function (studentData) {
         resolve();
     });
 };
+module.exports.updateStudent = function (updatedStudentData) {
+    return new Promise((resolve, reject) => {
+        const studentIndex = dataCollection.students.findIndex(student => student.studentNum == updatedStudentData.studentNum);
+
+        if (studentIndex === -1) {
+            reject("Student not found");
+            return;
+        }
+
+        // Update the student's data
+        dataCollection.students[studentIndex] = {
+            ...dataCollection.students[studentIndex], 
+            ...updatedStudentData 
+        };
+
+        resolve();
+    });
+};
 

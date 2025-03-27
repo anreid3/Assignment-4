@@ -73,14 +73,19 @@ app.get("/courses", (req, res) => {
         });
 });
 
-app.get("/student/:num", (req, res) => {
-    collegeData.getStudentByNum(req.params.num)
+app.get("/student/:studentNum", (req, res) => {
+    collegeData.getStudentByNum(req.params.studentNum)
         .then((student) => {
-            res.json(student);
+            collegeData.getAllStudents()
+                .then((students) => {
+                    res.render("student", { students: students, student: student });
+                })
+                .catch(() => {
+                    res.render("student", { message: "no results" });
+                });
         })
-        .catch((err) => {
-            console.error("Error retrieving student:", err);
-            res.json({ message: "no results" });
+        .catch(() => {
+            res.status(404).send("Student Not Found");
         });
 });
 
@@ -108,6 +113,17 @@ app.post("/students/add", (req, res) => {
         .catch((err) => {
             console.error("Error adding student:", err);
             res.status(500).send("Unable to add student");
+        });
+});
+
+app.post("/student/update", (req, res) => {    
+    collegeData.updateStudent(req.body)
+        .then(() => {
+            res.redirect(`/student/${req.body.studentNum}`); 
+        })
+        .catch((err) => {
+            console.error("Error updating student:", err);
+            res.status(500).send("Unable to update student");
         });
 });
 
