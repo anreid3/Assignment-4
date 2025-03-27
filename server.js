@@ -76,16 +76,21 @@ app.get("/courses", (req, res) => {
 app.get("/student/:studentNum", (req, res) => {
     collegeData.getStudentByNum(req.params.studentNum)
         .then((student) => {
-            collegeData.getAllStudents()
-                .then((students) => {
-                    res.render("student", { students: students, student: student });
-                })
-                .catch(() => {
-                    res.render("student", { message: "no results" });
-                });
+            res.render("studentUpdate", { student: student }); 
         })
         .catch(() => {
             res.status(404).send("Student Not Found");
+        });
+});
+
+app.get("/course/:id", (req, res) => {
+    collegeData.getCourseById(req.params.id) 
+        .then((course) => {
+            res.render("course", { course: course }); 
+        })
+        .catch((err) => {
+            console.error("Error fetching course:", err);
+            res.status(404).send("Course Not Found"); 
         });
 });
 
@@ -116,12 +121,12 @@ app.post("/students/add", (req, res) => {
         });
 });
 
-app.post("/student/update", (req, res) => {    
+app.post("/student/update", (req, res) => {
     collegeData.updateStudent(req.body)
         .then(() => {
             res.redirect(`/student/${req.body.studentNum}`); 
         })
-        .catch((err) => {
+        .catch(err => {
             console.error("Error updating student:", err);
             res.status(500).send("Unable to update student");
         });

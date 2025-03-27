@@ -82,7 +82,8 @@ module.exports.getStudentsByCourse = function (course) {
         }
 
         if (filteredStudents.length == 0) {
-            reject("query returned 0 results"); return;
+            reject("query returned 0 results");
+            return;
         }
 
         resolve(filteredStudents);
@@ -106,16 +107,23 @@ module.exports.updateStudent = function (updatedStudentData) {
 
         if (studentIndex === -1) {
             reject("Student not found");
-            return;
+        } else {
+            dataCollection.students[studentIndex] = {
+                ...dataCollection.students[studentIndex],
+                ...updatedStudentData
+            };
+            resolve();
         }
-
-        // Update the student's data
-        dataCollection.students[studentIndex] = {
-            ...dataCollection.students[studentIndex], 
-            ...updatedStudentData 
-        };
-
-        resolve();
     });
 };
+module.exports.getCourseById = function (id) {
+    return new Promise((resolve, reject) => {
+        const foundCourse = dataCollection.courses.find(course => course.courseId == id); 
 
+        if (!foundCourse) {
+            reject("Query returned 0 results"); 
+        } else {
+            resolve(foundCourse); 
+        }
+    });
+};
