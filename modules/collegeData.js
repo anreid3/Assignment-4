@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('neondb', 'anreid3', 'npg_Lmup4hKD1gsX', {
-    host: 'host',
+const sequelize = new Sequelize('neondb', 'neondb_owner', 'npg_Lmup4hKD1gsX', {
+    host: 'ep-spring-surf-a5kdouz0-pooler.us-east-2.aws.neon.tech',
     dialect: 'postgres',
     port: 5432,
     dialectOptions: {
