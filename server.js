@@ -1,10 +1,10 @@
 /*********************************************************************************
-*  WEB700 – Assignment 05
+*  WEB700 – Assignment 06
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Andrienne Reid     Student ID: 164798233    Date: March 26,2025
+*  Name: Andrienne Reid     Student ID: 164798233    Date: April 5,2025
 *
 *  Online (Vercel) Link:https://vercel.com/andrienne-reids-projects/assignment-5
 *
@@ -53,45 +53,34 @@ app.locals.equal = function (lvalue, rvalue, options) {
     }
 };
 
-app.get("/students", (req, res) => {
+app.get('/students', (req, res) => {
     collegeData.getAllStudents()
-        .then((students) => {
-            res.render("student", { students: students }); 
-        })
-        .catch(() => {
-            res.render("student", { message: "no results" }); 
-        });
+        .then(data => res.json(data))
+        .catch(err => res.status(500).send(err));
 });
 
-app.get("/courses", (req, res) => {
+app.get('/courses', (req, res) => {
     collegeData.getCourses()
-        .then((courses) => {
-            res.render("course", { courses: courses }); // Pass the courses array to the view
-        })
-        .catch(() => {
-            res.render("course", { message: "no results" }); // Pass a fallback message
-        });
+        .then(data => res.json(data))
+        .catch(err => res.status(500).send(err));
 });
 
-app.get("/student/:studentNum", (req, res) => {
-    collegeData.getStudentByNum(req.params.studentNum)
-        .then((student) => {
-            res.render("studentUpdate", { student: student }); 
-        })
-        .catch(() => {
-            res.status(404).send("Student Not Found");
-        });
+app.get('/students/course/:course', (req, res) => {
+    collegeData.getStudentsByCourse(req.params.course)
+        .then(data => res.json(data))
+        .catch(err => res.status(500).send(err));
 });
 
-app.get("/course/:id", (req, res) => {
-    collegeData.getCourseById(req.params.id) 
-        .then((course) => {
-            res.render("course", { course: course }); 
-        })
-        .catch((err) => {
-            console.error("Error fetching course:", err);
-            res.status(404).send("Course Not Found"); 
-        });
+app.get('/student/:num', (req, res) => {
+    collegeData.getStudentByNum(req.params.num)
+        .then(data => res.json(data))
+        .catch(err => res.status(500).send(err));
+});
+
+app.get('/course/:id', (req, res) => {
+    collegeData.getCourseById(req.params.id)
+        .then(data => res.json(data))
+        .catch(err => res.status(500).send(err));
 });
 
 app.get('/', (req, res) => {
@@ -110,39 +99,29 @@ app.get("/students/add", (req, res) => {
     res.render('addStudent');
 });
 
-app.post("/students/add", (req, res) => {
+app.post('/students', (req, res) => {
     collegeData.addStudent(req.body)
-        .then(() => {
-            res.redirect("/students");
-        })
-        .catch((err) => {
-            console.error("Error adding student:", err);
-            res.status(500).send("Unable to add student");
-        });
+        .then(() => res.send("Student added successfully"))
+        .catch(err => res.status(500).send(err));
 });
 
-app.post("/student/update", (req, res) => {
+app.put('/student/:num', (req, res) => {
+    req.body.studentNum = req.params.num; // Ensure `studentNum` is included in `req.body`
     collegeData.updateStudent(req.body)
-        .then(() => {
-            res.redirect(`/student/${req.body.studentNum}`); 
-        })
-        .catch(err => {
-            console.error("Error updating student:", err);
-            res.status(500).send("Unable to update student");
-        });
+        .then(() => res.send("Student updated successfully"))
+        .catch(err => res.status(500).send(err));
 });
 
 app.use((req, res) => {
-    res.status(404).json({ message: "Page Not Found" });
+    res.status(404).send("Page Not Found");
 });
 collegeData.initialize()
     .then(() => {
-        app.listen(HTTP_PORT, () => {
-            console.log("Server listening on port: " + HTTP_PORT);
-        });
+        console.log("Database initialized successfully!");
+        app.listen(HTTP_PORT, () => console.log(`Server listening on port ${HTTP_PORT}`));
     })
-    .catch((err) => {
-        console.error("Failed to initialize data collection:", err);
+    .catch(err => {
+        console.log("Failed to initialize data collection: " + err);
     });
 // setup http server to listen on HTTP_PORT
 //app.listen(HTTP_PORT, () => {
