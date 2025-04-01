@@ -103,6 +103,11 @@ app.get('/students/add', (req, res) => {
             res.render("addStudent", { courses: [] }); 
         });
 });
+app.get("/student/delete/:studentNum", (req, res) => {
+    collegeData.deleteStudentByNum(req.params.studentNum)
+        .then(() => res.redirect("/students"))
+        .catch(() => res.status(500).send("Unable to Remove Student / Student not found"));
+});
 app.post('/students', (req, res) => {
     collegeData.addStudent(req.body)
         .then(() => res.send("Student added successfully"))

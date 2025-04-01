@@ -156,3 +156,16 @@ module.exports.deleteCourseById = function (id) {
             .catch(() => reject("Unable to delete course"));
     });
 };
+module.exports.deleteStudentByNum = function (studentNum) {
+    return new Promise((resolve, reject) => {
+        Student.destroy({ where: { studentNum } })
+            .then(rowsDeleted => {
+                if (rowsDeleted > 0) {
+                    resolve("Student deleted successfully");
+                } else {
+                    reject("Student not found");
+                }
+            })
+            .catch(() => reject("Unable to delete student"));
+    });
+};
