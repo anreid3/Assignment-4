@@ -15,7 +15,8 @@
                         <th>Email</th>
                         <th>Address</th>
                         <th>Status</th>
-                        <th>Course ID</th>
+                        <th>Course</th>
+                        <th></th> <!-- Empty header for remove button -->
                     </tr>
                 </thead>
                 <tbody>
@@ -27,12 +28,26 @@
                                 <td><a href="mailto:<%= student.email %>"><%= student.email %></a></td>
                                 <td><%= student.address %></td>
                                 <td><%= student.status %></td>
-                                <td><a href="/students?course=<%= student.courseID %>"><%= student.courseID %></a></td>
+                                <td>
+                                    <form method="POST" action="/student/update">
+                                        <input type="hidden" name="studentNum" value="<%= student.studentNum %>" />
+                                        <select class="form-control" name="course">
+                                            <option value="">Select Course</option>
+                                            <% viewData.courses.forEach(course => { %>
+                                                <option value="<%= course.courseId %>" <% if (course.courseId == student.course) { %> selected <% } %>><%= course.courseCode %></option>
+                                            <% }); %>
+                                        </select>
+                                </td>
+                                <td>
+                                        <button class="btn btn-primary" type="submit">Update Student</button>
+                                    </form>
+                                    <a href="/student/delete/<%= student.studentNum %>" class="btn btn-danger">Remove</a>
+                                </td>
                             </tr>
                         <% }); %>
                     <% } else { %>
                         <tr>
-                            <td colspan="6" class="text-center">No students found.</td>
+                            <td colspan="7" class="text-center">No students found.</td>
                         </tr>
                     <% } %>
                 </tbody>

@@ -68,12 +68,40 @@ app.get('/students/course/:course', (req, res) => {
         .catch(err => res.status(500).send(err));
 });
 app.get('/student/:num', (req, res) => {
-    collegeData.getStudentByNum(req.params.num)
-        .then(data => res.json(data))
-        .catch(err => res.status(500).send(err));
+    let viewData = {};
+
+    collegeData.getStudentByNum(req.params.studentNum)
+        .then(data => viewData.student = data || null)
+        .catch(() => viewData.student = null)
+        .then(collegeData.getCourses)
+        .then(data => {
+            viewData.courses = data;
+            if (viewData.student) {
+                viewData.courses.forEach(course => {
+                    if (course.courseId == viewData.student.course) {
+                        course.selected = true;
+                    }
+                });
+            }
+        })
+        .catch(() => viewData.courses = [])
+        .then(() => {
+            if (!viewData.student) {
+                res.status(404).send("Student Not Found");
+            } else {
+                res.render("student", { viewData });
+            }
+        });
 });
-app.get("/students/add", (req, res) => {
-    res.render('addStudent');
+
+app.get('/students/add', (req, res) => {
+    collegeData.getCourses()
+        .then(data => {
+            res.render("addStudent", { courses: data }); 
+        })
+        .catch(() => {
+            res.render("addStudent", { courses: [] }); 
+        });
 });
 app.post('/students', (req, res) => {
     collegeData.addStudent(req.body)
@@ -81,7 +109,7 @@ app.post('/students', (req, res) => {
         .catch(err => res.status(500).send(err));
 });
 app.put('/student/:num', (req, res) => {
-    req.body.studentNum = req.params.num; // Ensure `studentNum` is included in `req.body`
+    req.body.studentNum = req.params.num; 
     collegeData.updateStudent(req.body)
         .then(() => res.send("Student updated successfully"))
         .catch(err => res.status(500).send(err));
