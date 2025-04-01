@@ -119,3 +119,40 @@ module.exports.updateStudent = function (studentData) {
             .catch(() => reject("unable to update student"));
     });
 };
+
+module.exports.addCourse = function (courseData) {
+    return new Promise((resolve, reject) => {
+        // Replace empty values with null
+        for (const key in courseData) {
+            if (courseData[key] === "") {
+                courseData[key] = null;
+            }
+        }
+
+        // Create new course using the Sequelize model
+        Course.create(courseData)
+            .then(() => resolve())
+            .catch(() => reject("unable to create course"));
+    });
+};
+module.exports.updateCourse = function (courseData) {
+    return new Promise((resolve, reject) => {
+       
+        for (const key in courseData) {
+            if (courseData[key] === "") {
+                courseData[key] = null;
+            }
+        }
+
+        Course.update(courseDataa, { where: { courseID: courseData.courseID } })
+            .then(() => resolve())
+            .catch(() => reject("unable to update course"));
+    });
+};
+module.exports.deleteCourseById = function (id) {
+    return new Promise((resolve, reject) => {
+        Course.destroy({ where: { courseId: id } })
+            .then(() => resolve("Course deleted successfully"))
+            .catch(() => reject("Unable to delete course"));
+    });
+};

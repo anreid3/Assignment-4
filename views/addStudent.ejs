@@ -1,28 +1,17 @@
 <div class="container">
     <div class="row">
         <main class="col-md-12">
-            <form method="POST" action="/students/add">
+            <form method="POST" action="/courses/add">
                 <div class="form-group">
-                    <label>First Name:</label>
-                    <input class="form-control" name="firstName" type="text" />
+                    <label>Course Code:</label>
+                    <input class="form-control" name="courseCode" type="text" required />
                 </div>
                 <div class="form-group">
-                    <label>Last Name:</label>
-                    <input class="form-control" name="lastName" type="text" />
+                    <label>Course Description:</label>
+                    <input class="form-control" name="courseDescription" type="text" required />
                 </div>
                 <div class="form-group">
-                    <label>Email:</label>
-                    <input class="form-control" name="email" type="email" />
-                </div>
-                <div class="form-group">
-                    <label>Status:</label>
-                    <select class="form-control" name="status">
-                        <option value="Full-time">Full-time</option>
-                        <option value="Part-time">Part-time</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button class="btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-success" type="submit">Add Course</button>
                 </div>
             </form>
         </main>
