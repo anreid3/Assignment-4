@@ -14,13 +14,17 @@
 var HTTP_PORT = process.env.PORT || 8080;
 var express = require("express");
 var path = require("path");
+var expressLayouts = require("express-ejs-layouts");
 var collegeData = require('./modules/collegeData'); // Import collegeData module
 
 var app = express();
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(expressLayouts);
+app.use(express.json());
 
+app.set("layout", "layouts/main");
 app.set('view engine', 'ejs'); // Specifies EJS as the view engine
 app.set('views', path.join(__dirname, 'views')); // Points to the "views" directory
 

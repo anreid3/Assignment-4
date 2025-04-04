@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
+const pg = require("pg");
 const sequelize = new Sequelize('neondb', 'neondb_owner', 'npg_Lmup4hKD1gsX', {
     host: 'ep-spring-surf-a5kdouz0-pooler.us-east-2.aws.neon.tech',
     dialect: 'postgres',
@@ -39,6 +40,9 @@ const Course = sequelize.define('Course', {
 
 // Define the relationship
 Course.hasMany(Student, { foreignKey: 'course' });
+Student.belongsTo(Course, { foreignKey: "course" });
+
+
 
 module.exports.initialize = function () {
     return new Promise((resolve, reject) => {
