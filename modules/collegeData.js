@@ -11,7 +11,7 @@ const sequelize = new Sequelize('neondb', 'neondb_owner', 'npg_Lmup4hKD1gsX', {
 });
 
 // Define the Student model
-const Student = sequelize.define('Student', {
+const Student = sequelize.define("Student", {
     studentNum: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -28,7 +28,7 @@ const Student = sequelize.define('Student', {
 });
 
 // Define the Course model
-const Course = sequelize.define('Course', {
+const Course = sequelize.define("Course", {
     courseId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -39,137 +39,122 @@ const Course = sequelize.define('Course', {
 });
 
 // Define the relationship
-Course.hasMany(Student, { foreignKey: 'course' });
+Course.hasMany(Student, { foreignKey: "course" });
 Student.belongsTo(Course, { foreignKey: "course" });
 
 
 
-module.exports.initialize = function () {
-    return new Promise((resolve, reject) => {
-        sequelize.sync()
-            .then(() => resolve())
-            .catch(() => reject("unable to sync the database"));
-    });
+module.exports.initialize = async function () {
+    try {
+        await sequelize.sync();
+        console.log("Database synced successfully!");
+    } catch (error) {
+        throw new Error("Unable to sync the database");
+    }
 };
 
-module.exports.getAllStudents = function () {
-    return new Promise((resolve, reject) => {
-        Student.findAll()
-            .then(data => resolve(data))
-            .catch(() => reject("no results returned"));
-    });
+module.exports.getAllStudents = async () => {
+    try {
+        return await Student.findAll();
+    } catch {
+        throw new Error("No students found");
+    }
 };
 
-module.exports.getStudentsByCourse = function (course) {
-    return new Promise((resolve, reject) => {
-        Student.findAll({ where: { course: course } })
-            .then(data => resolve(data))
-            .catch(() => reject("no results returned"));
-    });
+module.exports.getStudentsByCourse = async (course) => {
+    try {
+        return await Student.findAll({ where: { course } });
+    } catch {
+        throw new Error("No students found for this course");
+    }
 };
 
-module.exports.getStudentByNum = function (num) {
-    return new Promise((resolve, reject) => {
-        Student.findAll({ where: { studentNum: num } })
-            .then(data => resolve(data[0]))
-            .catch(() => reject("no results returned"));
-    });
+module.exports.getStudentByNum = async (num) => {
+    try {
+        const student = await Student.findOne({ where: { studentNum: num } });
+        return student || null;
+    } catch {
+        throw new Error("Student not found");
+    }
 };
 
-module.exports.getCourses = function () {
-    return new Promise((resolve, reject) => {
-        Course.findAll()
-            .then(data => resolve(data))
-            .catch(() => reject("no results returned"));
-    });
-};
-
-module.exports.getCourseById = function (id) {
-    return new Promise((resolve, reject) => {
-        Course.findAll({ where: { courseId: id } })
-            .then(data => resolve(data[0]))
-            .catch(() => reject("no results returned"));
-    });
-};
-
-module.exports.addStudent = function (studentData) {
-    return new Promise((resolve, reject) => {
+module.exports.addStudent = async (studentData) => {
+    try {
         studentData.TA = studentData.TA ? true : false;
-
         for (const key in studentData) {
-            if (studentData[key] === "") {
-                studentData[key] = null;
-            }
+            if (studentData[key] === "") studentData[key] = null;
         }
-
-        Student.create(studentData)
-            .then(() => resolve())
-            .catch(() => reject("unable to create student"));
-    });
+        await Student.create(studentData);
+    } catch {
+        throw new Error("Unable to create student");
+    }
 };
 
-module.exports.updateStudent = function (studentData) {
-    return new Promise((resolve, reject) => {
+module.exports.updateStudent = async (studentData) => {
+    try {
         studentData.TA = studentData.TA ? true : false;
-
         for (const key in studentData) {
-            if (studentData[key] === "") {
-                studentData[key] = null;
-            }
+            if (studentData[key] === "") studentData[key] = null;
         }
-
-        Student.update(studentData, { where: { studentNum: studentData.studentNum } })
-            .then(() => resolve())
-            .catch(() => reject("unable to update student"));
-    });
+        await Student.update(studentData, { where: { studentNum: studentData.studentNum } });
+    } catch {
+        throw new Error("Unable to update student");
+    }
 };
 
-module.exports.addCourse = function (courseData) {
-    return new Promise((resolve, reject) => {
-        // Replace empty values with null
+module.exports.deleteStudentByNum = async (studentNum) => {
+    try {
+        const result = await Student.destroy({ where: { studentNum } });
+        if (!result) throw new Error("Student not found");
+    } catch {
+        throw new Error("Unable to delete student");
+    }
+};
+
+// Course functions
+module.exports.getCourses = async () => {
+    try {
+        return await Course.findAll();
+    } catch {
+        throw new Error("No courses found");
+    }
+};
+
+module.exports.getCourseById = async (id) => {
+    try {
+        return await Course.findOne({ where: { courseId: id } });
+    } catch {
+        throw new Error("Course not found");
+    }
+};
+
+module.exports.addCourse = async (courseData) => {
+    try {
         for (const key in courseData) {
-            if (courseData[key] === "") {
-                courseData[key] = null;
-            }
+            if (courseData[key] === "") courseData[key] = null;
         }
-
-        // Create new course using the Sequelize model
-        Course.create(courseData)
-            .then(() => resolve())
-            .catch(() => reject("unable to create course"));
-    });
+        await Course.create(courseData);
+    } catch {
+        throw new Error("Unable to create course");
+    }
 };
-module.exports.updateCourse = function (courseData) {
-    return new Promise((resolve, reject) => {
-       
+
+module.exports.updateCourse = async (courseData) => {
+    try {
         for (const key in courseData) {
-            if (courseData[key] === "") {
-                courseData[key] = null;
-            }
+            if (courseData[key] === "") courseData[key] = null;
         }
+        await Course.update(courseData, { where: { courseId: courseData.courseId } });
+    } catch {
+        throw new Error("Unable to update course");
+    }
+};
 
-        Course.update(courseDataa, { where: { courseID: courseData.courseID } })
-            .then(() => resolve())
-            .catch(() => reject("unable to update course"));
-    });
-};
-module.exports.deleteCourseById = function (id) {
-    return new Promise((resolve, reject) => {
-        Course.destroy({ where: { courseId: id } })
-            .then(() => resolve("Course deleted successfully"))
-            .catch(() => reject("Unable to delete course"));
-    });
-};
-module.exports.deleteStudentByNum = function (studentNum) {
-    return new Promise((resolve, reject) => {
-        Student.destroy({ where: { studentNum } })
-            .then(rowsDeleted => {
-                if (rowsDeleted > 0) {
-                    resolve("Student deleted successfully");
-                } else {
-                    reject("Student not found");
-                }
-            })
-            .catch(() => reject("Unable to delete student"));
-    });
+module.exports.deleteCourseById = async (id) => {
+    try {
+        const result = await Course.destroy({ where: { courseId: id } });
+        if (!result) throw new Error("Course not found");
+    } catch {
+        throw new Error("Unable to delete course");
+    }
 };
