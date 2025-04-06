@@ -93,6 +93,7 @@ app.get("/student/:studentNum", async (req, res) => {
     res.status(500).json({ error: `Failed to retrieve student: ${err.message}` });
   }
 });
+
 app.get("/student/delete/:studentNum", async (req, res) => {
   try {
     const studentNum = req.params.studentNum;

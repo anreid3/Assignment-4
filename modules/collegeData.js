@@ -75,6 +75,22 @@ module.exports.getStudentByNum = async (studentNum) => {
     }
 };
 
+module.exports.getStudentByNum = async (studentNum) => {
+    try {        
+        studentNum = parseInt(studentNum, 10);
+        const student = await Student.findOne({ where: { studentNum } });
+        console.log("Student retrieved:", student);
+        if (!student) {
+            throw new Error("Student not found");
+        }
+
+        return student;
+    } catch (error) {
+        console.error("Error finding student:", error);
+        throw new Error(`Database lookup failed: ${error.message}`);
+    }
+};
+
 module.exports.addStudent = async (studentData) => {
     try {
       console.log("Processing student data:", studentData);
