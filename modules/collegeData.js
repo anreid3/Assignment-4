@@ -64,12 +64,14 @@ module.exports.getStudentsByCourse = async (course) => {
     }
 };
 
-module.exports.getStudentByNum = async (num) => {
+module.exports.getStudentByNum = async (studentNum) => {
     try {
-        const student = await Student.findOne({ where: { studentNum: parseInt(num, 10) } });
-        return student || null;
-    } catch {
-        throw new Error("Student not found");
+        const student = await Student.findOne({ where: { studentNum } });
+        console.log("Student retrieved:", student); // Debugging log
+        return student;
+    } catch (error) {
+        console.error("Error finding student:", error);
+        throw new Error(`Database lookup failed: ${error.message}`);
     }
 };
 
@@ -113,17 +115,16 @@ module.exports.updateStudent = async (studentData) => {
     }
 };
 
-module.exports.deleteStudentByNum = async (studentNum) => {
+module.exports.deleteStudent = async (studentNum) => {
     try {
-        studentNum = parseInt(studentNum, 10); // Ensure proper integer conversion.
         const result = await Student.destroy({ where: { studentNum } });
-        if (!result) throw new Error("Student not found");
+        console.log("Delete result:", result); // Debugging log
+        return result;
     } catch (error) {
         console.error("Error deleting student:", error);
-        throw new Error("Unable to delete student");
+        throw new Error(`Database delete failed: ${error.message}`);
     }
 };
-
 // Course functions
 module.exports.getCourses = async () => {
     try {

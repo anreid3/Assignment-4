@@ -77,6 +77,37 @@ app.get("/students/add", async (req, res) => {
   }
 });
 
+app.get("/student/:studentNum", async (req, res) => {
+  try {
+    const studentNum = req.params.studentNum;
+    console.log("Looking for student:", studentNum); // Debugging log
+
+    const student = await collegeData.getStudentByNum(studentNum);
+    if (!student) {
+      return res.status(404).json({ error: "Student not found." });
+    }
+
+    res.render("student", { student });
+  } catch (err) {
+    console.error("Error retrieving student:", err);
+    res.status(500).json({ error: `Failed to retrieve student: ${err.message}` });
+  }
+});
+app.get("/student/delete/:studentNum", async (req, res) => {
+  try {
+    const studentNum = req.params.studentNum;
+    console.log("Deleting student:", studentNum); // Debugging log
+
+    await collegeData.deleteStudent(studentNum);
+    console.log("Student deleted successfully!");
+
+    res.redirect("/students");
+  } catch (err) {
+    console.error("Error deleting student:", err);
+    res.status(500).json({ error: `Failed to delete student: ${err.message}` });
+  }
+});
+
 app.post("/students", async (req, res) => {
   console.log("Received student data:", req.body); 
   try {
