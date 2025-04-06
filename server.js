@@ -145,6 +145,21 @@ app.post("/courses/add", async (req, res) => {
   }
 });
 
+app.get("/course/delete/:id", async (req, res) => {
+  try {
+      const id = req.params.id;
+      console.log("Deleting course:", id); // Debugging log
+
+      await collegeData.deleteCourseById(id);
+      console.log("Course deleted successfully!");
+
+      res.redirect("/courses");
+  } catch (err) {
+      console.error("Error deleting course:", err);
+      res.status(500).json({ error: `Failed to delete course: ${err.message}` });
+  }
+});
+
 // Error Handling Middleware
 app.use((req, res) => {
   res.status(404).json({ error: "Page Not Found" });
